@@ -18,7 +18,18 @@ jobs:
       uses: actions/setup-python@v3
     - name: Build SeaweedFS
       run: |
-        docker build -t davidt101/seaweed-fs-minimal:${{ github.run_number }} .
+        docker build -t davidt101/seaweed-fs-minimal:${{ github.run_number }} \
+            -t davidt101/seaweed-fs-minimal:latest .
 
-
-
+    - name: Run SeaweedFS
+      run: |
+        docker run -d \
+            --name seaweedfs${{ github.run_number }} \
+            -v $(pwd)/weed-data:/weed-data \
+            -p 9333:9333 \
+            -p 9340:9340 \
+            -p 8888:8888 \
+            -p 8333:8333 \
+            -p 7333:7333 \
+            -p 23646:23646 \
+            davidt101/seaweed-fs-minimal:${{ github.run_number }}
