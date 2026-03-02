@@ -1,0 +1,24 @@
+name: SeaweedFS Application
+
+on:
+  push:
+
+    branches: [ "main", "281-fix-misspelling-in-llm-from-scratch-jupyter" ]
+
+permissions:
+  contents: read
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Checkout SeaweedFS
+      uses: actions/setup-python@v3
+    - name: Build SeaweedFS
+      run: |
+        docker build -t davidt101/seaweed-fs-minimal:${{ github.run_number }} .
+
+
+
